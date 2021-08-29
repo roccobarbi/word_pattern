@@ -11,6 +11,10 @@ def get_dictionary(language):
     return None
 
 
+def list_dictionaries():
+    return __dictionary__.keys()
+
+
 def generate_pattern_map(language):
     """Sets up the project with a pattern map for the specified language.
 
