@@ -104,10 +104,28 @@ def generate_pattern_map(language):
 def lookup_pattern(pattern, language):
     """Looks up a specific pattern and returns all matching words.
 
-    :param pattern: the desired pattern
+    :param pattern: the desired word or pattern (the pattern is recreated to ensure consistency)
     :param language: the desired language
     :return: a list of all words matching the pattern in the specified language
+
+    If the language does not exist, it throws an error.
+    If the pattern map does not exist, it creates it.
+    It looks up the pattern in the pattern_map and returns a list of all matching words.
     """
+    if language not in __dictionary__.keys():
+        raise ValueError("Unknown language code: " + language)
+    module_dir, module_file = os.path.split(__file__)
+    patterns_dir = os.path.join(module_dir, "patterns")
+    language_dir = os.path.join(patterns_dir, language)
+    if not os.path.exists(patterns_dir) or not os.path.isdir(patterns_dir) or not os.path.exists(language_dir):
+        generate_pattern_map(language)
+    word_pattern, word_unique = build_word_pattern(pattern, language)
+    length_dir = os.path.join(language_dir, str(len(pattern)))
+    map_file = os.path.join(length_dir, str(word_unique) + ".json")
+    if os.path.exists(length_dir) and os.path.isdir(length_dir):
+        if os.path.exists(map_file) and os.path.isfile(map_file):
+            with open(map_file, "r") as infile:
+                return json.load(infile)
     return []
 
 
