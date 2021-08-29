@@ -17,8 +17,7 @@ def parse_arguments(arguments):
     configuration = {
         "language": ""
     }
-    err = None
-    return configuration, err
+    return configuration
 
 
 def generate_pattern(pattern, config, wordlist):
@@ -33,9 +32,7 @@ def lookup_pattern(pattern, config, wordlist):
 
 def main():
     arguments = sys.argv[1:]
-    config, err = parse_arguments(arguments)
-    if err is not None:
-        sys.exit(1)
+    config = parse_arguments(arguments)
     wordlist = dictionary.get_dictionary(config["language"])
     if wordlist is None:
         sys.exit(1)
