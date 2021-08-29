@@ -101,20 +101,6 @@ def generate_pattern_map(language):
     __save_pattern_map__(language, patterns)
 
 
-def get_pattern_map(language):
-    """Reads the file that maps each bucket of a language's patterns to the bucket file.
-
-    :param language: the desired language
-    :return: a dictionary that can be navigated to reach the right bucket file
-
-    If the language is not available, an error should be thrown.
-
-    If the language is available, but no map is available, a map should be generated.
-
-    If the language and the map are available, the map should be retrieved and returned."""
-    return {}
-
-
 def lookup_pattern(pattern, language):
     """Looks up a specific pattern and returns all matching words.
 
