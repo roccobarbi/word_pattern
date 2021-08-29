@@ -5,9 +5,10 @@ import json
 
 
 def get_dictionary(language):
+    module_dir, module_file = os.path.split(__file__)
     if language in __dictionary__.keys():
         output = []
-        with open(__dictionary__[language], "r") as infile:
+        with open(os.path.join(module_dir, __dictionary__[language]), "r") as infile:
             for line in infile:
                 output.append(line.rstrip("\n"))
         return output
@@ -19,7 +20,8 @@ def list_dictionaries():
 
 
 def __remove_pattern_dir__(language):
-    patterns_dir = os.path.join(".", "patterns")
+    module_dir, module_file = os.path.split(__file__)
+    patterns_dir = os.path.join(module_dir, "patterns")
     language_dir = os.path.join(patterns_dir, language)
     if os.path.exists(patterns_dir) and os.path.isdir(patterns_dir):
         if os.path.exists(language_dir):
@@ -58,17 +60,22 @@ def __build_pattern_map__(language):
 
 
 def __build_pattern_map_directories__(language, patterns):
-    language_dir = os.path.join(".", "patterns", language)
+    module_dir, module_file = os.path.split(__file__)
+    patterns_dir = os.path.join(module_dir, "patterns")
+    if not os.path.exists(patterns_dir):
+        os.mkdir(patterns_dir)
+    language_dir = os.path.join(patterns_dir, language)
     os.mkdir(language_dir)
     for word_length in patterns.keys():
-        os.mkdir(os.path.join(language_dir, word_length))
+        os.mkdir(os.path.join(language_dir, str(word_length)))
 
 
 def __save_pattern_map__(language, patterns):
-    language_dir = os.path.join(".", "patterns", language)
+    module_dir, module_file = os.path.split(__file__)
+    language_dir = os.path.join(module_dir, "patterns", language)
     for word_length in patterns.keys():
-        word_length_dir = os.path.join(language_dir, word_length)
-        for word_unique in patterns[word_length].keys:
+        word_length_dir = os.path.join(language_dir, str(word_length))
+        for word_unique in patterns[word_length].keys():
             with open(os.path.join(word_length_dir, str(word_unique) + ".json"), "w", encoding="utf-8") as outfile:
                 json.dump(patterns[word_length][word_unique], outfile, ensure_ascii=False, indent=4)
 
