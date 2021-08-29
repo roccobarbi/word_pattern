@@ -2,6 +2,17 @@ from dictionaries import dictionary
 import sys
 
 
+class KnownLetter:
+    def __init__(self, letter, position):
+        self.letter = letter
+        self.position = position
+
+    def is_here(self, word):
+        if len(word) >= self.position + 1 and word[self.position] == self.letter:
+            return True
+        return False
+
+
 def parse_arguments(arguments):
     configuration = {
         "language": ""
