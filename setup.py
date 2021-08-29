@@ -15,5 +15,5 @@ def main():
         dictionary.generate_pattern_map(language)
 
 
-if __name__ == "__main":
+if __name__ == "__main__":
     main()
