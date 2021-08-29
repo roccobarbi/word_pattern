@@ -114,6 +114,7 @@ def lookup_pattern(pattern, language):
     """
     if language not in __dictionary__.keys():
         raise ValueError("Unknown language code: " + language)
+    pattern_map = {}
     module_dir, module_file = os.path.split(__file__)
     patterns_dir = os.path.join(module_dir, "patterns")
     language_dir = os.path.join(patterns_dir, language)
@@ -125,7 +126,9 @@ def lookup_pattern(pattern, language):
     if os.path.exists(length_dir) and os.path.isdir(length_dir):
         if os.path.exists(map_file) and os.path.isfile(map_file):
             with open(map_file, "r") as infile:
-                return json.load(infile)
+                pattern_map = json.load(infile)
+    if word_pattern in pattern_map.keys():
+        return pattern_map[word_pattern]
     return []
 
 
