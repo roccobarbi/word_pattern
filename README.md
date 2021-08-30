@@ -52,3 +52,7 @@ pattern `ijvxgydga`, you will use the command `python word_pattern.py -l en -k c
 
 As a result, a list of all words from the specified dictionary that follow the pattern and constraints will be printed
 on screen.
+
+## Contributing to this project
+
+Please have a look at the [contributing guide](contributing.md).
