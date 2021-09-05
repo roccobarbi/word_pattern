@@ -56,3 +56,5 @@ on screen.
 ## Contributing to this project
 
 Please have a look at the [contributing guide](contributing.md).
+
+You can also support this project [with a donation through Patreon](https://www.patreon.com/roccobarbi).
