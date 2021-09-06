@@ -10,7 +10,7 @@ def get_dictionary(language):
         output = []
         with open(os.path.join(module_dir, __dictionary__[language]), "r") as infile:
             for line in infile:
-                output.append(line.rstrip("\n"))
+                output.append(line.rstrip("\n").lower())
         return output
     return None
 

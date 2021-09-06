@@ -101,6 +101,7 @@ def check_illegal_letters(wordlist, config):
 
 def main():
     arguments = sys.argv[1:]
+    arguments = [string.lower() for string in arguments]
     configuration = parse_arguments(arguments)
     wordlist = dictionary.lookup_pattern(configuration.pattern, configuration.language)
     wordlist = check_known_letters(wordlist, configuration)
