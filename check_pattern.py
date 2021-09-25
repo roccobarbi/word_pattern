@@ -2,6 +2,36 @@ from dictionaries import dictionary
 import sys
 
 
+def print_usage():
+    usage = [
+        " ------------------ ------------------------------------------------------------",
+        "| check_pattern.py |",
+        " ------------------",
+        "",
+        "USAGE: python3 check_pattern.py -l {language} [options] {pattern}"
+        "",
+        "{language} must be a valid language code (e.g. 'en').",
+        "{pattern} must be a pattern, composed of alphabetical characters.",
+        "",
+        "The pattern is case insensitive",
+        "",
+        "OPTIONS:",
+        " -k {character},{position} a known character, which has already been decoded",
+        " -i {character}[{character}] one or more characters that are known to be missing",
+        "                             from this specific word",
+        "",
+        "EXAMPLES:",
+        "",
+        "python3 check_pattern.py -l en -k m,1 -k s,3 -i rab cjddjke",
+        "",
+        "  this would identify a word with the pattern cjddjke, where c is known to",
+        "  represent the letter m, d is known to represent the letter s, the letters r, a",
+        "  and b are known to be missing."
+    ]
+    for line in usage:
+        print(line)
+
+
 class KnownLetter:
     def __init__(self, letter, position):
         self.letter = letter
@@ -55,6 +85,9 @@ def parse_arguments(arguments):
         if argument.startswith("-"):
             if len(argument) != 2 or argument[1] == "-":
                 raise ValueError("Unknown argument: " + argument)
+            if argument[1] == 'h':
+                print_usage()
+                sys.exit(0)
             parse_state = argument[1]
         else:
             if parse_state is None:
