@@ -21,7 +21,7 @@ class CheckPatternConfig:
         self.pattern = None
 
     def set_pattern(self, pattern):
-        self.pattern = pattern
+        self.pattern = pattern.lower()
 
     def set_known_letter(self, known_letter_arg):
         if "," not in known_letter_arg:
