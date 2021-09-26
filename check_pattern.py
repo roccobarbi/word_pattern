@@ -26,7 +26,7 @@ class CheckPatternConfig:
     def set_known_letter(self, known_letter_arg):
         if "," not in known_letter_arg:
             raise ValueError("Wrong known letter definition: " + known_letter_arg)
-        letter = known_letter_arg.split(",")[0]
+        letter = known_letter_arg.split(",")[0].lower()
         position = int(known_letter_arg.split(",")[1]) - 1
         if position < 0:
             raise ValueError("Wrong known letter definition: the position must be greater than zero!")
@@ -37,10 +37,10 @@ class CheckPatternConfig:
             raise ValueError("Wrong illegal letter definition: " + illegal_letter)
         for letter in illegal_letter:
             if letter not in self.illegal_letters:
-                self.illegal_letters.append(letter)
+                self.illegal_letters.append(letter.lower())
 
     def set_language(self, language):
-        self.language = language
+        self.language = language.lower()
 
 
 def parse_arguments(arguments):
@@ -101,7 +101,6 @@ def check_illegal_letters(wordlist, config):
 
 def main():
     arguments = sys.argv[1:]
-    arguments = [string.lower() for string in arguments]
     configuration = parse_arguments(arguments)
     wordlist = dictionary.lookup_pattern(configuration.pattern, configuration.language)
     wordlist = check_known_letters(wordlist, configuration)
