@@ -132,12 +132,25 @@ def check_illegal_letters(wordlist, config):
     return output
 
 
+def check_aca_illegal_letters(wordlist, config):
+    output = []
+    for word in wordlist:
+        is_compliant = True
+        for index, letter in enumerate(word):
+            if letter == config.pattern[index]:
+                is_compliant = False
+        if is_compliant:
+            output.append(word)
+    return output
+
+
 def main():
     arguments = sys.argv[1:]
     configuration = parse_arguments(arguments)
     wordlist = dictionary.lookup_pattern(configuration.pattern, configuration.language)
     wordlist = check_known_letters(wordlist, configuration)
     wordlist = check_illegal_letters(wordlist, configuration)
+    wordlist = check_aca_illegal_letters(wordlist, configuration)
     for word in wordlist:
         print(word)
 
