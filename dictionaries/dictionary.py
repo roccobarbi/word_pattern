@@ -37,10 +37,13 @@ def build_word_pattern(word, language):
     unique = 0
     char_map = {}
     for char in word:
-        if char not in char_map.keys():
-            char_map[char] = unique
-            unique += 1
-        pattern += __alphabet__[language][char_map[char]]
+        if char in ['\'', '-']:
+            pattern += char
+        else:
+            if char not in char_map.keys():
+                char_map[char] = unique
+                unique += 1
+            pattern += __alphabet__[language][char_map[char]]
     return pattern, unique
 
 
