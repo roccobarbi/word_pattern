@@ -4,6 +4,16 @@ import shutil
 import json
 
 
+def is_pattern_word(word):
+    alphabet = {}
+    for character in word:
+        if character in alphabet.keys():
+            return True  # At least a letter is repeated, at least once
+        else:
+            alphabet[character] = 1
+    return False
+
+
 def get_dictionary(language):
     module_dir, module_file = os.path.split(__file__)
     if language in __dictionary__.keys():
@@ -51,14 +61,15 @@ def __build_pattern_map__(language):
     patterns = {}
     wordlist = get_dictionary(language)
     for word in wordlist:
-        word_pattern, word_unique = build_word_pattern(word, language)
-        if len(word) not in patterns.keys():
-            patterns[len(word)] = {}
-        if word_unique not in patterns[len(word)]:
-            patterns[len(word)][word_unique] = {}
-        if word_pattern not in patterns[len(word)][word_unique]:
-            patterns[len(word)][word_unique][word_pattern] = []
-        patterns[len(word)][word_unique][word_pattern].append(word)
+        if is_pattern_word(word):
+            word_pattern, word_unique = build_word_pattern(word, language)
+            if len(word) not in patterns.keys():
+                patterns[len(word)] = {}
+            if word_unique not in patterns[len(word)]:
+                patterns[len(word)][word_unique] = {}
+            if word_pattern not in patterns[len(word)][word_unique]:
+                patterns[len(word)][word_unique][word_pattern] = []
+            patterns[len(word)][word_unique][word_pattern].append(word)
     return patterns
 
 
@@ -98,7 +109,7 @@ def generate_pattern_map(language):
     For example, "ancillary" would have the pattern "abcdeeafg"."""
     if language not in __dictionary__.keys():
         raise ValueError("Unknown language code: " + language)
-    __remove_pattern_dir__(language) # remove any previous pattern map
+    __remove_pattern_dir__(language)  # remove any previous pattern map
     patterns = __build_pattern_map__(language)
     __build_pattern_map_directories__(language, patterns)
     __save_pattern_map__(language, patterns)
